@@ -1,56 +1,41 @@
-import { contactsSlice } from 'redux/contactsSlice';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import css from 'components/ContactForm/ContactForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterSlice } from 'redux/filterSlice';
+import { ContactItem } from './ContactItem/ContactItems';
+import { Toaster } from 'react-hot-toast';
 
-export function App() {
-  const { contacts } = useSelector(state => state.contacts);
-  const { filter } = useSelector(state => state.filter);
-  const dispatch = useDispatch();
-
-
-const addContact = ({ name, number }) => {
-    const value = contacts.find(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (value) {
-      alert(`${name} is already in contacts.`);
-    } else {
-      dispatch(contactsSlice.actions.addContact({ name, number }));
-    }
-  };
-
-
-  const deleteContact = ({ id }) =>
-    dispatch(contactsSlice.actions.deleteContact({ id }));
-  
-  const changeFilter = event =>
-    dispatch(filterSlice.actions.changeFilter(event.currentTarget.value));
-
-  
-   function getFilterContact() {
-     const normalizedFilter = filter.toLowerCase();
-     
-     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  }
-
- 
+export const App = () => {
   return (
     <div className={css.container}>
-      <h1>Phonebook</h1>
-      <ContactForm onSubmit={addContact} />
-      <h2>Contacts</h2>
-      <Filter value={filter} onChange={changeFilter}></Filter>
-      <ContactList
-        onSubmit={addContact}
-        contacts={getFilterContact()}
-        ondeleteContact={deleteContact}
-      />
+      <h2 className={css.title}>Phonebook</h2>
+      <ContactForm />
+
+      <h2 className={css.title}>Contacts</h2>
+      <div className={css.smalContainer}>
+        <Filter />
+
+        <ContactList>
+          <ContactItem />
+        </ContactList>
+        <Toaster />
+      </div>
     </div>
   );
-}
+};
+
+ 
+//   return (
+//     <div className={css.container}>
+//       <h1>Phonebook</h1>
+//       <ContactForm onSubmit={addContact} />
+//       <h2>Contacts</h2>
+//       <Filter value={filter} onChange={changeFilter}></Filter>
+//       <ContactList
+//         onSubmit={addContact}
+//         contacts={getFilterContact()}
+//         ondeleteContact={deleteContact}
+//       />
+//     </div>
+//   );
+// }

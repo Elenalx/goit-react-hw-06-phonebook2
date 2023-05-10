@@ -1,28 +1,9 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts, ondeleteContact }) => {
-  return (
-    <ul>
-      {contacts.map(contact => {
-        return (
-          <li key={contact.id} className={css.item}>
-            {contact.name}: {contact.number}
-            <button
-              type="button"
-              onClick={() => ondeleteContact(contact)}
-              className={css.btn}
-            >
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  );
+export const ContactList = ({ children }) => {
+  return <ul>{children}</ul>;
 };
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  children: PropTypes.element.isRequired,
 };

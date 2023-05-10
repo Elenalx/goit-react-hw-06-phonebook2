@@ -1,39 +1,47 @@
-import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import css from './ContactForm.module.css';
+import { addContact } from 'redux/contactsSlice';
 
-export function ContactForm({ onSubmit }) {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const state = { name, number };
-
-  const idName = nanoid();
-  const idNumber = nanoid();
-
-  function handleNameChange(event) {
-    setName(event.currentTarget.value);
-  }
-  function handleNumberChange(event) {
-    setNumber(event.currentTarget.value);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    onSubmit(state);
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    addContactToState(name, number);
     reset();
-  }
+  };
 
-  function reset() {
+  const reset = () => {
     setName('');
     setNumber('');
-  }
+  };
+
+  const handleNameChange = evt => {
+    setName(evt.target.value);
+  };
+
+  const handleNumberChange = evt => {
+    setNumber(evt.target.value);
+  };
+
+   const dispatch = useDispatch();
+
+  const contactsStore = useSelector(state => state.contacts);
+  const addContactToState = (name, number) => {
+    if (contactsStore.find(obj => obj.name === name)) {
+      toast.error(`${name} is already in contacts.`);
+      return;
+    }
+
+    dispatch(addContact(name, number));
+  };
 
   return (
     <form onSubmit={handleSubmit} className={css.form}>
-      <label htmlFor={idName} className={css.label}>
+      <label className={css.label}>
         Name
       </label>
       <input
@@ -44,11 +52,10 @@ export function ContactForm({ onSubmit }) {
         required
         value={name}
         onChange={handleNameChange}
-        id={idName}
         className={css.input}
       />
 
-      <label htmlFor={idNumber} className={css.label}>
+      <label className={css.label}>
         Number
       </label>
       <input
@@ -59,7 +66,6 @@ export function ContactForm({ onSubmit }) {
         required
         value={number}
         onChange={handleNumberChange}
-        id={idNumber}
         className={css.input}
       />
 
@@ -70,7 +76,3 @@ export function ContactForm({ onSubmit }) {
   );
 }
 
-ContactForm.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.string,
-};
