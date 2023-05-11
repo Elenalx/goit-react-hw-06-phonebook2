@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactsSlice';
 
 export const ContactItem = () => {
-  const contacts = useSelector(state => state.contacts);
-  const contactsFilter = useSelector(state => state.filter);
+  const { contacts } = useSelector(state => state.contacts);
+  const { filter } = useSelector(state => state.filter);
 
   const dispatch = useDispatch();
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = contactsFilter.toLowerCase();
+ function getVisibleContacts () {
+   const normalizedFilter = filter.toLowerCase();
+   
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );

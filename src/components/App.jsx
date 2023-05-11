@@ -25,17 +25,3 @@ export const App = () => {
 };
 
  
-//   return (
-//     <div className={css.container}>
-//       <h1>Phonebook</h1>
-//       <ContactForm onSubmit={addContact} />
-//       <h2>Contacts</h2>
-//       <Filter value={filter} onChange={changeFilter}></Filter>
-//       <ContactList
-//         onSubmit={addContact}
-//         contacts={getFilterContact()}
-//         ondeleteContact={deleteContact}
-//       />
-//     </div>
-//   );
-// }
