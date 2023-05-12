@@ -1,8 +1,10 @@
+import React from 'react';
+
 import { ContactForm } from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-import css from 'components/ContactForm/ContactForm.module.css';
+import { ContactList } from './ContactList/ContactList';
 import { ContactItem } from './ContactItem/ContactItems';
+import css from './App.module.css';
 import { Toaster } from 'react-hot-toast';
 
 export const App = () => {
